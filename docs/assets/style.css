@@ -229,9 +229,8 @@ a.wa:hover { filter: brightness(1.12); }
 .frase { background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 8px; padding: 10px 12px; margin-top: 12px !important; }
 .nemo { background: var(--warn); border: 1px solid var(--warn-line); border-radius: 10px; padding: 8px 12px; font-size: .92rem; }
 .rasgos li { margin: 6px 0; }
-.bloques { min-width: 640px; }
-.reparto td, .reparto th { text-align: center; }
-.reparto td:first-child { font-weight: 700; }
+.bloques { min-width: 720px; }
+.expone { display: inline-block; vertical-align: middle; font-size: .72rem; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 99px; padding: 2px 10px; margin-left: 6px; letter-spacing: 0; }
 .comp td:first-child { font-weight: 600; color: var(--muted); }
 .linea .fecha { min-width: 110px; font-weight: 600; color: var(--text); }
 .linea .est.u3 { color: var(--a); border-color: var(--a); }
