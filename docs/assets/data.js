@@ -37,11 +37,12 @@ const ESCALA = { min: 1, max: 5, aprobatoria: 4 };
 // evaluaciones: { nombre, fecha: "AAAA-MM-DD", peso: %, nota: 1-5 | null }
 // tareas: { titulo, entrega: "AAAA-MM-DD", hecha: bool }
 // material: { titulo, url }
+// guias: { titulo, ruta, nota } páginas de estudio dentro de la carpeta de la materia en docs/
 // temario: lista de temas del plan de la materia; apuntes: { fecha, titulo, archivo } (ruta dentro de la carpeta de la materia)
 const MATERIAS = [
   { slug: "contabilidad-i", nombre: "Contabilidad I", codigo: "32041", seccion: "10301", horas: 2,
     docente: "Bueno Otamendi, Amilcar Jose de Jesus", aula: "ARMFCG208", uc: 3, cupo: { inscritos: 2, capacidad: 5 }, carpeta: "Contabilidad%20I",
-    evaluaciones: [], tareas: [], material: [], temario: [],
+    evaluaciones: [], tareas: [], material: [], temario: [], guias: [],
     apuntes: [{ fecha: "2026-10-10", titulo: "Definición de contabilidad y ecuación contable", archivo: "Apuntes/2026-10-10%20Definicion%20y%20ecuacion%20contable.md" }] },
   { slug: "economia-general", nombre: "Economía General", codigo: "32061", seccion: "10201", horas: 2,
     docente: "Meza Palma, Sergio Roldan", aula: "ARMFCG215", uc: 3, cupo: { inscritos: 4, capacidad: 5 }, carpeta: "Economia%20General",
@@ -70,7 +71,8 @@ const MATERIAS = [
       "X. Objetivos e instrumentos de la política económica",
     ],
     apuntes: [{ fecha: "2026-10-01", titulo: "Introducción: concepto de economía, Adam Smith y oferta y demanda", archivo: "Apuntes/2026-10-01%20Introduccion.md" },
-      { fecha: "2026-10-08", titulo: "Principios, métodos, problema económico y circuito económico", archivo: "Apuntes/2026-10-08%20Principios%20y%20circuito%20economico.md" }] },
+      { fecha: "2026-10-08", titulo: "Principios, métodos, problema económico y circuito económico", archivo: "Apuntes/2026-10-08%20Principios%20y%20circuito%20economico.md" }],
+    guias: [{ titulo: "Guía para la exposición: unidades III y IV", ruta: "exposicion/", nota: "II Evaluación · 12/11/2026" }] },
 ];
 
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];

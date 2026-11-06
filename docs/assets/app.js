@@ -1,6 +1,8 @@
 (function () {
   const root = document.body.dataset.root || "";
   const slug = document.body.dataset.materia || "";
+  // Páginas sueltas de una materia (guías): solo usan la navegación.
+  const pagina = document.body.dataset.pagina || "";
   const $ = id => document.getElementById(id);
   const fmt = d => d.toLocaleDateString("es-VE", { day: "numeric", month: "short", year: "numeric" });
   const hoy = new Date();
@@ -225,6 +227,11 @@
     $("apuntes").innerHTML = m.apuntes.length
       ? `<ul>${m.apuntes.map(a => `<li>${fmt(new Date(a.fecha + "T00:00"))} · <a href="${REPO}${m.carpeta}/${a.archivo}" target="_blank" rel="noopener">${esc(a.titulo)} ↗</a></li>`).join("")}</ul>`
       : vacio("Todavía no hay apuntes cargados.");
+    const guias = m.guias || [];
+    if ($("card-guias")) {
+      $("card-guias").hidden = !guias.length;
+      $("guias").innerHTML = `<ul>${guias.map(g => `<li><a href="${esc(g.ruta)}">${esc(g.titulo)}</a>${g.nota ? ` <span class="muted">${esc(g.nota)}</span>` : ""}</li>`).join("")}</ul>`;
+    }
 
     // Evaluaciones, tareas y material: solo se pueden editar con la sesión abierta.
     const edit = privado && window.PRIV;
@@ -367,9 +374,9 @@
       m.material = (p.material && p.material.length) ? p.material : base[i].material;
       m.contactos = (p.contactos && p.contactos.length) ? p.contactos : base[i].contactos;
     });
-    slug ? materia() : home();
+    if (!pagina) slug ? materia() : home();
     perfil(d);
   });
 
-  slug ? materia() : home();
+  if (!pagina) slug ? materia() : home();
 })();
