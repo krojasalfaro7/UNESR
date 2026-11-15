@@ -48,13 +48,13 @@ const MATERIAS = [
     docente: "Meza Palma, Sergio Roldan", aula: "ARMFCG215", uc: 3, cupo: { inscritos: 4, capacidad: 5 }, carpeta: "Economia%20General",
     evaluaciones: [
       { nombre: "I Evaluación: Ensayo (unidades I y II)", fecha: "2026-10-22", peso: 25, nota: null },
-      { nombre: "II Evaluación: Exposiciones en grupo (unidades III y IV)", fecha: "2026-11-12", peso: 25, nota: null },
+      { nombre: "II Evaluación: Exposiciones en grupo (unidades III y IV)", fecha: "2026-11-19", peso: 25, nota: null },
       { nombre: "III Evaluación: Taller en grupo (unidades V, VI y VII)", fecha: "2026-12-03", peso: 25, nota: null },
       { nombre: "IV Evaluación: Debate en grupo (unidades VIII, IX y X)", fecha: "2027-01-28", peso: 25, nota: null },
     ],
     tareas: [
       { titulo: "Enviar por correo el ensayo (unidades I y II)", entrega: "2026-10-22", hecha: true },
-      { titulo: "Enviar por correo la monografía (unidades III y IV)", entrega: "2026-11-12", hecha: false },
+      { titulo: "Enviar por correo la monografía (unidades III y IV)", entrega: "2026-11-19", hecha: false },
       { titulo: "Enviar por correo la monografía (unidades VIII, IX y X)", entrega: "2027-01-28", hecha: false },
     ],
     material: [{ titulo: "Bibliografía del contrato de aprendizaje", url: "https://github.com/krojasalfaro7/UNESR-2026-2/blob/develop/Economia%20General/Bibliografia.md" }],
@@ -72,7 +72,7 @@ const MATERIAS = [
     ],
     apuntes: [{ fecha: "2026-10-01", titulo: "Introducción: concepto de economía, Adam Smith y oferta y demanda", archivo: "Apuntes/2026-10-01%20Introduccion.md" },
       { fecha: "2026-10-08", titulo: "Principios, métodos, problema económico y circuito económico", archivo: "Apuntes/2026-10-08%20Principios%20y%20circuito%20economico.md" }],
-    guias: [{ titulo: "Guía para la exposición: unidades III y IV", ruta: "exposicion/", nota: "II Evaluación · 12/11/2026" }] },
+    guias: [{ titulo: "Guía para la exposición: unidades III y IV", ruta: "exposicion/", nota: "II Evaluación · 19/11/2026" }] },
 ];
 
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];

@@ -24,7 +24,7 @@
 | Evaluación | Peso | Fecha (sec. 10201) |
 |---|---|---|
 | I Evaluación: Ensayo (unidades I y II) | 25% | 22/10/2026 |
-| II Evaluación: Exposiciones en grupo (unidades III y IV) | 25% | 12/11/2026 |
+| II Evaluación: Exposiciones en grupo (unidades III y IV) | 25% | 19/11/2026 (movida del 12/11 por el profesor) |
 | III Evaluación: Taller en grupo (unidades V, VI y VII) | 25% | 03/12/2026 |
 | IV Evaluación: Debate en grupo (unidades VIII, IX y X) | 25% | 28/01/2027 |
 | Prueba de recuperación (oral, objetivos no alcanzados) | – | 03/02/2027 |

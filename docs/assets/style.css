@@ -230,6 +230,13 @@ a.wa:hover { filter: brightness(1.12); }
 .nemo { background: var(--warn); border: 1px solid var(--warn-line); border-radius: 10px; padding: 8px 12px; font-size: .92rem; }
 .rasgos li { margin: 6px 0; }
 .bloques { min-width: 720px; }
+.bloques small { color: var(--muted); font-size: .85rem; }
+.lamina { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 18px; align-items: start; }
+.lamina img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+.franjas li { margin: 0 0 10px !important; }
+.franjas b, .franjas span { display: block; }
+.franjas span { color: var(--muted); font-size: .92rem; }
+@media (max-width: 640px) { .lamina { grid-template-columns: 1fr; } }
 .expone { display: inline-block; vertical-align: middle; font-size: .72rem; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 99px; padding: 2px 10px; margin-left: 6px; letter-spacing: 0; }
 .comp td:first-child { font-weight: 600; color: var(--muted); }
 .linea .fecha { min-width: 110px; font-weight: 600; color: var(--text); }
