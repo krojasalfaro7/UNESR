@@ -230,6 +230,16 @@ a.wa:hover { filter: brightness(1.12); }
 .nemo { background: var(--warn); border: 1px solid var(--warn-line); border-radius: 10px; padding: 8px 12px; font-size: .92rem; }
 .rasgos li { margin: 6px 0; }
 .bloques { min-width: 720px; }
+.recorte { margin: 0 0 12px; }
+.recorte img { display: block; max-width: 100%; max-height: 240px; width: auto; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+.recorte figcaption { font-size: .75rem; color: var(--muted); margin-top: 4px; }
+.decir { background: var(--accent-soft); border-radius: 12px; padding: 12px 14px 8px; margin-bottom: 10px; }
+.decir > b { display: block; margin-bottom: 6px; color: var(--accent); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
+.decir li { margin: 6px 0; }
+.guia details.mas { border: 0; border-top: 1px dashed var(--line); margin-top: 6px; }
+.guia details.mas > summary { color: var(--accent); font-weight: 600; font-size: .92rem; }
+.guia details.mas p { margin: 0 0 10px; }
+.expone.apoyo { color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
 .bloques small { color: var(--muted); font-size: .85rem; }
 .lamina { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 18px; align-items: start; }
 .lamina img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
