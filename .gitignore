@@ -1,1 +1,20 @@
-privado/
+# Repo público: lista blanca. Todo se ignora salvo lo de abajo.
+# Los PDF, Office, imágenes de documentos, etc. viven en el disco (viajan con ~/Personal) pero no se suben.
+*
+!*/
+!.gitignore
+!/README.md
+!/CLAUDE.md
+!/firestore.rules
+!/.claude/
+!/.claude/settings.json
+!/.githooks/
+!/.githooks/*
+!/scripts/
+!/scripts/*.sh
+!/docs/
+!/docs/**
+# Apuntes y guías en Markdown de cada lapso/materia
+!/Lapsos/**/*.md
+# Nunca: datos personales
+/privado/

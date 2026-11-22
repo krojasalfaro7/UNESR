@@ -18,7 +18,9 @@
   try { const t = localStorage.getItem("tema"); if (t) raiz.dataset.theme = t; } catch (e) {}
 
   // ---- Navegación ----
-  const links = [`<a href="${root || "./"}" class="${slug ? "" : "on"}" ${slug ? "" : 'aria-current="page"'}>Home</a>`]
+  // "UNESR" lleva al portal de todos los lapsos (un nivel arriba de la raíz del lapso).
+  const links = [`<a href="${root}../">UNESR</a>`,
+    `<a href="${root || "./"}" class="${slug ? "" : "on"}" ${slug ? "" : 'aria-current="page"'}>${SITIO.corto || "Lapso"}</a>`]
     .concat(MATERIAS.map(m => `<a href="${root}${m.slug}/" class="${m.slug === slug ? "on" : ""}" ${m.slug === slug ? 'aria-current="page"' : ""}>${m.nombre}</a>`));
   $("nav").innerHTML = `<div class="in"><div class="links">${links.join("")}</div><div class="acts"><a class="sga" href="${SITIO.sga}" target="_blank" rel="noopener">SGA ↗</a><button id="sesion" type="button">Iniciar sesión</button><button id="copiar" type="button" title="Copiar enlace del SGA">Copiar SGA</button><button id="tema" type="button" aria-label="Cambiar tema"></button></div></div>`;
   const btn = $("tema");

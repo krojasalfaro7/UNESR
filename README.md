@@ -1,8 +1,12 @@
-# UNESR 2026-2
+# UNESR
+
+Portal de la carrera (todos los lapsos): https://unesr.ubbedigital.com
+
+## Lapso actual: 2026-2
 
 Semestre 2026-2 · Universidad Nacional Experimental Simón Rodríguez (Núcleo Los Teques) · Administración mención Informática.
 
-Página de estado: https://unesr.ubbedigital.com
+Página del lapso: https://unesr.ubbedigital.com/2026-2/
 
 Lapso académico (calendario oficial): 28/09/2026 al 13/02/2027. Las constancias indican 27/09/2026 al 12/02/2027; se usan las fechas del calendario.
 
@@ -12,8 +16,8 @@ SGA: https://sga.unesr.edu.ve/#/
 
 | Código | Materia | Sección | Horas | Docente | Carpeta |
 |--------|---------|---------|-------|---------|---------|
-| 32041 | Contabilidad I | 10301 | 2 | Bueno Otamendi, Amilcar Jose de Jesus | [Contabilidad I](Contabilidad%20I) |
-| 32061 | Economía General | 10201 | 2 | Meza Palma, Sergio Roldan | [Economia General](Economia%20General) |
+| 32041 | Contabilidad I | 10301 | 2 | Bueno Otamendi, Amilcar Jose de Jesus | [Contabilidad I](Lapsos/2026-2/Contabilidad%20I) |
+| 32061 | Economía General | 10201 | 2 | Meza Palma, Sergio Roldan | [Economia General](Lapsos/2026-2/Economia%20General) |
 
 ## Horario
 
@@ -26,13 +30,31 @@ Escala de notas: 1 a 5, mínimo aprobatorio 4. Cada materia tiene 3 unidades de 
 
 ## Estructura
 
-- `docs/`: sitio de GitHub Pages.
-  - `index.html`: Home (resumen, avance del lapso, materias, horario).
-  - `contabilidad-i/`, `economia-general/`: página de cada materia (datos, horario, temario, apuntes, evaluaciones y notas, tareas, material).
-  - `assets/data.js`: datos del sitio (materias, horario, evaluaciones, tareas). Es lo único que hay que editar para actualizar las páginas.
-  - `assets/app.js`, `assets/style.css`: lógica, navegación y estilos compartidos.
-- `Contabilidad I/`, `Economia General/`: archivos de cada materia (README con temario, `Apuntes/` con las notas de clase en Markdown, PDFs, etc.).
-- `Documentos/CALENDARIO.md`: calendario académico administrativo 2026-2 (los hitos que muestra la página están en `HITOS` de `assets/data.js`).
-- `privado/`: documentos personales (constancias, datos de la API, contactos). Está en `.gitignore` y no se sube al repo.
+La carpeta `Estudios/Universidades/UNESR` completa es el repo, pero **solo se suben** el sitio, los scripts
+y los `.md` de `Lapsos/` (`.gitignore` de lista blanca). PDFs, Office, constancias, récords y carnets
+quedan en el disco (viajan con `~/Personal`); `.githooks/pre-commit` bloquea documentos, `privado/`,
+`Carrera/` y cédulas o teléfonos aunque se agreguen con `git add -f`.
 
-Para agregar una materia nueva: añadirla en `MATERIAS` dentro de `assets/data.js` y copiar una carpeta de `docs/` cambiando `data-materia` por el nuevo `slug`.
+- `docs/`: sitio de GitHub Pages (`unesr.ubbedigital.com`).
+  - `index.html` + `lapsos.js`: portal con el lapso actual y el historial de lapsos.
+  - `assets/`: `app.js`, `style.css`, `privado.js`, compartidos por todos los lapsos.
+  - `<lapso>/`: sitio de un lapso. `index.html` (resumen, avance, materias, horario), `data.js` (datos del
+    lapso: es lo único que hay que editar) y una carpeta por materia (`<slug>/index.html`, guías dentro).
+  - `2025-3/introduccion-administracion/`: presentación del intensivo (antes en el repo `pages`).
+  - `contabilidad-i/`, `economia-general/`: redirecciones a `2026-2/` (links viejos).
+- `Lapsos/<lapso>/<Materia>/`: archivos de cada materia (README con temario, `Apuntes/` en Markdown; los PDF
+  y demás no se suben). `Lapsos/2026-2/CALENDARIO.md`: calendario académico (los hitos de la página están
+  en `HITOS` de `docs/2026-2/data.js`).
+- `Carrera/` (no se sube): plan de estudios, reglamento, aranceles, carnets, récord académico, acreditación.
+- `privado/<lapso>/` (no se sube): constancias, contactos, `datos.json` del perfil.
+
+## Lapso nuevo
+
+1. Copiar `docs/2026-2/` a `docs/<lapso>/`, reescribir su `data.js` (`SITIO`, `HITOS`, `MATERIAS`, `CLASES`;
+   `REPO` apunta a `Lapsos/<lapso>/`) y dejar solo las carpetas de sus materias (`data-materia` = `slug`).
+2. Crear `Lapsos/<lapso>/<Materia>/` con su README.
+3. En `docs/lapsos.js`: el nuevo con `estado: "en curso"` y quitarle el estado al anterior.
+4. `scripts/version.sh`, commit y push.
+
+Materia nueva dentro de un lapso: añadirla en `MATERIAS` de `docs/<lapso>/data.js` y copiar una carpeta de
+materia cambiando `data-materia` por el nuevo `slug`.

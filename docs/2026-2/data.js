@@ -1,10 +1,11 @@
 // Fuente única de datos del sitio. Editar aquí y todas las páginas se actualizan.
-const REPO = "https://github.com/krojasalfaro7/UNESR-2026-2/tree/develop/";
+const REPO = "https://github.com/krojasalfaro7/UNESR/tree/develop/Lapsos/2026-2/";
 
 const SITIO = {
   titulo: "Semestre 2026-2",
+  corto: "2026-2",
   subtitulo: "UNESR · Núcleo Los Teques · Administración mención Informática (plan 1982)",
-  // Fechas del calendario académico oficial (Documentos/CALENDARIO.md)
+  // Fechas del calendario académico oficial (Lapsos/2026-2/CALENDARIO.md)
   lapso: { inicio: "2026-09-28", fin: "2027-02-13" },
   sga: "https://sga.unesr.edu.ve/#/",
 };
@@ -57,7 +58,7 @@ const MATERIAS = [
       { titulo: "Enviar por correo la monografía (unidades III y IV)", entrega: "2026-11-19", hecha: false },
       { titulo: "Enviar por correo la monografía (unidades VIII, IX y X)", entrega: "2027-01-28", hecha: false },
     ],
-    material: [{ titulo: "Bibliografía del contrato de aprendizaje", url: "https://github.com/krojasalfaro7/UNESR-2026-2/blob/develop/Economia%20General/Bibliografia.md" }],
+    material: [{ titulo: "Bibliografía del contrato de aprendizaje", url: "https://github.com/krojasalfaro7/UNESR/blob/develop/Lapsos/2026-2/Economia%20General/Bibliografia.md" }],
     temario: [
       "I. La ciencia económica",
       "II. La producción y el equilibrio económico",

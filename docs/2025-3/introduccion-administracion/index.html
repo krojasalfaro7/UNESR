@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Interactivo: Gestión Pública en Venezuela</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Serene Academia -->
+    <!-- Application Structure Plan: He diseñado la aplicación en torno a tres pilares temáticos centrales: 'Administración Pública', 'Ética Pública' y 'Justicia Social'. En lugar de una presentación lineal, el usuario puede explorar estos conceptos en cualquier orden a través de una navegación principal. Cada pilar contiene subsecciones interactivas (usando un sistema de pestañas) para presentar definiciones, características y desafíos de forma digerible. El flujo culmina en una sección visual que demuestra la interconexión de los tres pilares, reforzando el mensaje central del informe. Esta estructura no lineal y temática fomenta la exploración y una comprensión más profunda de las relaciones entre los conceptos, mejorando la usabilidad en comparación con una secuencia de diapositivas. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Conceptos de AP, Ética, Justicia Social. Goal: Informar y Organizar. Viz/Method: Secciones temáticas con pestañas interactivas. Interaction: Clic en pestañas para revelar contenido. Justification: Evita la sobrecarga de información y permite al usuario enfocarse en un concepto a la vez. Method: HTML/Tailwind + JS.
+        - Report Info: Principios de Ética Pública y Desafíos. Goal: Organizar y destacar. Viz/Method: Tarjetas de contenido individuales para cada ítem. Interaction: Efecto hover para indicar interactividad. Justification: Segmenta la información en bloques visualmente atractivos y fáciles de asimilar. Method: HTML/Tailwind.
+        - Report Info: Conexión entre los tres conceptos. Goal: Relacionar/Sintetizar. Viz/Method: Diagrama de flujo visual simple. Interaction: Clic en los nodos del diagrama para resaltar el texto explicativo correspondiente. Justification: Transforma una lista de viñetas en una visualización interactiva que ilustra la dependencia entre los conceptos de forma clara e impactante. Method: HTML/Tailwind + JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root {
+            --bg-main: #FDFBF8;
+            --bg-secondary: #F4F1EC;
+            --text-primary: #3D352E;
+            --text-secondary: #6E6055;
+            --accent: #0D9488; /* Teal-700 from Tailwind */
+            --accent-light: #CCFBF1; /* Teal-100 from Tailwind */
+            --border-color: #E7E0D8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-button.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .nav-button:hover {
+            color: var(--accent);
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .tab-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-button.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .diagram-node {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .diagram-node.active, .diagram-node:hover {
+            transform: scale(1.05);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .diagram-node.active {
+            background-color: var(--accent);
+        }
+        .diagram-node.active .diagram-icon, .diagram-node:hover .diagram-icon {
+            transform: rotate(360deg);
+        }
+        .diagram-node .diagram-icon {
+            transition: transform 0.8s ease-in-out;
+        }
+        .diagram-text {
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+        .diagram-text.active {
+            opacity: 1;
+            font-weight: 600;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header class="text-center mb-12">
+            <img src="media/uners_logo.png" alt="UNERS Logo" class="mx-auto" style="max-width: 200px; padding-bottom: 10px;" />
+            <p>República Bolivariana de Venezuela</p>
+            <p>Ministerio del Poder Popular para la Educación Universitaria</p>
+            <p>Universidad Nacional Experimental Simón Rodríguez</p>
+            <p>Núcleo: Caricuao</p>
+        </header>
+
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-var(--text-primary)">Unidad 7 - Administración Pública, Ética y Justicia Social</h1>
+            <!-- <p class="mt-4 text-lg text-var(--text-secondary) max-w-3xl mx-auto">Un análisis interactivo de los pilares para el desarrollo y la equidad en Venezuela.</p> -->
+        </header>
+
+
+        <div class="flex justify-between mb-12 gap-8 flex-wrap">
+
+            <div class="text-left" style="padding-left: 200px;">
+                <b>Facilitador:</b>
+                <ul class="list-disc list-inside">
+                    <li>Yarelis Verónica Quintero</li>
+                </ul>
+            </div>
+            <div class="text-left" style="padding-right: 200px;">
+                <b>Participantes:</b>
+                <ul class="list-disc list-inside">
+                    <li class="justify-between items-center">
+                        <span>Kevin Rojas</span>
+                        <span>C.I. 25.215.355</span>
+                    </li>
+                    <li class="justify-between items-center">
+                        <span>Zhakira Arrechedera</span>
+                        <span>C.I. 15.148.074</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <header class="text-center mb-12">
+            <p>Caracas, septiembre 2025</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-var(--border-color) mb-12">
+            <button class="nav-button active py-4 px-6 text-lg font-semibold" data-target="pilar-admin">Administración Pública</button>
+            <button class="nav-button py-4 px-6 text-lg font-semibold" data-target="pilar-etica">Ética Pública</button>
+            <button class="nav-button py-4 px-6 text-lg font-semibold" data-target="pilar-justicia">Justicia Social</button>
+        </nav>
+
+        <main>
+            <!-- Sección: Administración Pública -->
+            <section id="pilar-admin" class="content-section active">
+                 <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-var(--accent)">Pilar I: La Maquinaria del Estado</h2>
+                    <!-- <p class="mt-2 text-md text-var(--text-secondary) max-w-2xl mx-auto">Esta sección explora qué es la Administración Pública y cómo funciona en el contexto venezolano.</p> -->
+                </div>
+                <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm border border-var(--border-color) p-6">
+                    <div class="flex border-b border-var(--border-color) mb-6">
+                        <button class="tab-button active flex-1 text-center py-2 px-4 rounded-t-md font-semibold" data-tab="admin-definicion">Definición y Funciones</button>
+                        <button class="tab-button flex-1 text-center py-2 px-4 rounded-t-md font-semibold" data-tab="admin-venezuela">Contexto en Venezuela</button>
+                    </div>
+                    <div id="admin-definicion" class="tab-content active">
+                        <h3 class="text-xl font-semibold mb-3">¿Qué es la Administración Pública?</h3>
+                        <p class="mb-4 text-var(--text-secondary)">Es el conjunto de organismos y procesos del Estado que tienen la responsabilidad de gestionar los asuntos públicos y aplicar las políticas gubernamentales para el bienestar de la sociedad.</p>
+                        <h4 class="font-semibold mb-2">Funciones Principales:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-var(--text-secondary)">
+                            <li><span class="text-var(--text-primary)">Implementar Políticas.</span></li>
+                            <li><span class="text-var(--text-primary)">Prestar Servicios Públicos.</span></li>
+                            <li><span class="text-var(--text-primary)">Administrar Recursos.</span></li>
+                        </ul>
+                    </div>
+                    <div id="admin-venezuela" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-3">La Administración Pública en Venezuela</h3>
+                         <p class="mb-4 text-var(--text-secondary)">Se caracteriza por ser un sistema complejo y altamente centralizado, con múltiples niveles de gobierno (nacional, regional y municipal) que interactúan en un entorno dinámico.</p>
+                        <h4 class="font-semibold mb-2">Características Clave:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-var(--text-secondary)">
+                            <li><span class="text-var(--text-primary)">Dependencia Petrolera.</span></li>
+                             <li><span class="text-var(--text-primary)">Desafíos Estructurales.</span></li>
+                            <li><span class="text-var(--text-primary)">Influencia del Entorno.</span></li>
+                        </ul>
+                         <h4 class="font-semibold mt-6 mb-2">Aporte de Carlos Matus: La Planificación Estratégica Situacional</h4>
+                         <!-- <p class="text-var(--text-secondary)">Matus propone que la planificación no puede ser solo una actividad técnica. Debe ser un proceso político que considere el juego de los actores sociales y las "situaciones" que se presentan. La administración pública debe ser proactiva, actuando con base en el análisis del entorno y los objetivos que se desean alcanzar en un contexto de constantes desafíos.</p> -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Ética Pública -->
+            <section id="pilar-etica" class="content-section">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-var(--accent)">Pilar II: La Brújula Moral</h2>
+                    <p class="mt-2 text-md text-var(--text-secondary) max-w-2xl mx-auto">Aquí se analiza el rol fundamental de la ética en el servicio público. Explora los principios que deben guiar a todo funcionario y los desafíos que se presentan en Venezuela.</p>
+                </div>
+                 <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-sm border border-var(--border-color) p-6">
+                        <h3 class="text-xl font-semibold mb-4">Principios Fundamentales de la Ética Pública</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-var(--bg-secondary) rounded-lg">
+                                <h4 class="font-bold">✓ Integridad</h4>
+                                <p class="text-sm text-var(--text-secondary)">Actuar con honestidad, rectitud y coherencia entre lo que se dice y lo que se hace.</p>
+                            </div>
+                            <div class="p-4 bg-var(--bg-secondary) rounded-lg">
+                                <h4 class="font-bold">✓ Transparencia</h4>
+                                <p class="text-sm text-var(--text-secondary)">Gestionar de forma abierta y clara, permitiendo el escrutinio y la fiscalización ciudadana.</p>
+                            </div>
+                            <div class="p-4 bg-var(--bg-secondary) rounded-lg">
+                                <h4 class="font-bold">✓ Rendición de Cuentas</h4>
+                                <p class="text-sm text-var(--text-secondary)">Asumir la responsabilidad por las decisiones y acciones, informando sobre los resultados.</p>
+                            </div>
+                            <div class="p-4 bg-var(--bg-secondary) rounded-lg">
+                                <h4 class="font-bold">✓ Imparcialidad</h4>
+                                <p class="text-sm text-var(--text-secondary)">Tratar a todos los ciudadanos por igual, sin privilegios, favoritismos ni discriminación.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="bg-white rounded-lg shadow-sm border border-var(--border-color) p-6">
+                        <h3 class="text-xl font-semibold mb-4">Desafíos Éticos en Venezuela</h3>
+                        <div class="space-y-4">
+                           <div class="p-4 border-l-4 border-red-400 bg-red-50 rounded-r-lg">
+                                <h4 class="font-bold text-red-800">Corrupción</h4>
+                                <p class="text-sm text-red-700">Un problema sistémico que desvía recursos y erosiona la confianza en las instituciones.</p>
+                            </div>
+                            <div class="p-4 border-l-4 border-yellow-400 bg-yellow-50 rounded-r-lg">
+                                <h4 class="font-bold text-yellow-800">Nepotismo y Clientelismo</h4>
+                                <p class="text-sm text-yellow-700">El favoritismo en la asignación de cargos, que prioriza la lealtad sobre la capacidad.</p>
+                            </div>
+                            <div class="p-4 border-l-4 border-blue-400 bg-blue-50 rounded-r-lg">
+                                <h4 class="font-bold text-blue-800">Falta de Institucionalidad</h4>
+                                <p class="text-sm text-blue-700">Debilidad de los mecanismos de control, supervisión y sanción para conductas indebidas.</p>
+                            </div>
+                            <div class="p-4 border-l-4 border-gray-400 bg-gray-50 rounded-r-lg">
+                                <h4 class="font-bold text-gray-800">Polarización</h4>
+                                <p class="text-sm text-gray-700">El impacto de las divisiones políticas que puede afectar la objetividad y el profesionalismo.</p>
+                            </div>
+                        </div>
+                         <h4 class="font-semibold mt-6 mb-2">Aporte de Bernardo Kliksberg: La Ética como Renta Social</h4>
+                         <p class="text-var(--text-secondary)">Bernardo Kliksberg argumenta que la ética no es un gasto, sino un activo para la sociedad.  La corrupción y la falta de transparencia generan un "escándalo ético" que deteriora la confianza ciudadana y la legitimidad del Estado. Por lo tanto, una administración pública ética es un pilar fundamental para el desarrollo sostenible.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Justicia Social -->
+            <section id="pilar-justicia" class="content-section">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-var(--accent)">Pilar III: El Objetivo Final</h2>
+                    <p class="mt-2 text-md text-var(--text-secondary) max-w-2xl mx-auto">La Justicia Social es la meta de una buena gobernanza. Esta sección define el concepto y contrasta el enfoque histórico en Venezuela con los complejos desafíos actuales.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm border border-var(--border-color) p-6">
+                    <div class="flex border-b border-var(--border-color) mb-6">
+                        <button class="tab-button active flex-1 text-center py-2 px-4 rounded-t-md font-semibold" data-tab="justicia-definicion">Definición y Objetivo</button>
+                        <button class="tab-button flex-1 text-center py-2 px-4 rounded-t-md font-semibold" data-tab="justicia-venezuela">Situación en Venezuela</button>
+                    </div>
+                    <div id="justicia-definicion" class="tab-content active">
+                        <h3 class="text-xl font-semibold mb-3">¿Qué es la Justicia Social?</h3>
+                        <p class="mb-4 text-var(--text-secondary)">Es el principio fundamental que busca una distribución más equitativa de los recursos, la riqueza y las oportunidades dentro de una sociedad, así como la garantía de la igualdad de derechos para todos sus miembros.</p>
+                        <h4 class="font-semibold mb-2">Objetivo Principal:</h4>
+                         <p class="text-var(--text-secondary)">Reducir y eliminar las desigualdades sociales, económicas y políticas sistémicas para que cada persona tenga la posibilidad de desarrollar su máximo potencial y vivir con dignidad.</p>
+                         <h4 class="font-semibold mt-6 mb-2">Aporte de Leonardo Boff: La Ética del Cuidado</h4>
+                         <p class="text-var(--text-secondary)">Leonardo Boff extiende el concepto de justicia social al ámbito ecológico.  Él propone que la justicia no puede ser solo entre los seres humanos, sino que debe incluir la relación con la naturaleza. La **ecología social** busca el bienestar de todas las formas de vida, y una sociedad justa debe cuidar el medio ambiente para las generaciones presentes y futuras, reconociendo nuestra interdependencia con el planeta.</p>
+                    </div>
+                    <div id="justicia-venezuela" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-3">La Justicia Social en Venezuela</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">Enfoque Histórico</h4>
+                                <p class="text-var(--text-secondary)">El Estado ha implementado diversas políticas y programas sociales (como las misiones) con el objetivo explícito de reducir la pobreza, mejorar el acceso a servicios básicos y disminuir la brecha de desigualdad.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">Desafíos Actuales</h4>
+                                <ul class="list-disc list-inside space-y-2 text-var(--text-secondary)">
+                                    <li>Profunda crisis económica y humanitaria.</li>
+                                    <li>Deterioro marcado de los servicios públicos esenciales.</li>
+                                    <li>Incremento de la desigualdad y la pobreza extrema.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Sección de Interconexión -->
+        <section class="mt-20 pt-12 border-t border-var(--border-color)">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-var(--text-primary)">La Interconexión: ¿Cómo se Relacionan?</h2>
+                <p class="mt-2 text-md text-var(--text-secondary) max-w-3xl mx-auto">Ninguno de estos pilares funciona de forma aislada. Su interacción es lo que define el éxito o el fracaso de la gestión pública.</p>
+            </div>
+
+            <div class="max-w-5xl mx-auto items-center justify-center">
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div id="node-etica" class="diagram-node active bg-var(--bg-secondary) p-6 rounded-lg text-center w-64 border border-var(--border-color)">
+                        <span class="text-4xl diagram-icon">⚖️</span>
+                        <h3 class="text-xl font-bold mt-2">Ética Pública</h3>
+                    </div>
+                    <div class="text-4xl text-var(--text-secondary) transform md:rotate-0 rotate-90">→</div>
+                    <div id="node-admin" class="diagram-node bg-var(--bg-secondary) p-6 rounded-lg text-center w-64 border border-var(--border-color)">
+                         <span class="text-4xl diagram-icon">🏛️</span>
+                        <h3 class="text-xl font-bold mt-2">Administración Pública</h3>
+                    </div>
+                    <div class="text-4xl text-var(--text-secondary) transform md:rotate-0 rotate-90">→</div>
+                     <div id="node-justicia" class="diagram-node bg-var(--bg-secondary) p-6 rounded-lg text-center w-64 border border-var(--border-color)">
+                         <span class="text-4xl diagram-icon">🌍</span>
+                        <h3 class="text-xl font-bold mt-2">Justicia Social</h3>
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-sm border border-var(--border-color)">
+                     <p id="text-etica" class="diagram-text active text-lg text-var(--text-secondary)">
+                        <span class="font-semibold text-var(--text-primary)">La Ética Pública es el cimiento.</span> Sin un comportamiento íntegro y transparente de los funcionarios, la administración se vuelve ineficiente y corrupta, impidiendo cualquier avance hacia la justicia.
+                    </p>
+                    <p id="text-admin" class="diagram-text text-lg text-var(--text-secondary) hidden">
+                        <span class="font-semibold text-var(--text-primary)">La Administración Pública es la herramienta.</span> Cuando es ética y eficiente, se convierte en el vehículo capaz de implementar políticas públicas de manera efectiva y asegurar que los recursos del Estado lleguen a quienes más los necesitan.
+                    </p>
+                    <p id="text-justicia" class="diagram-text text-lg text-var(--text-secondary) hidden">
+                        <span class="font-semibold text-var(--text-primary)">La Justicia Social es el resultado.</span> Es el fruto de una administración que opera con ética. Una gestión pública justa y equitativa reduce las desigualdades y garantiza oportunidades para todos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusión -->
+        <footer class="mt-20 pt-10 text-center border-t border-var(--border-color)">
+             <h2 class="text-2xl font-bold text-var(--text-primary)">Conclusión: Un Camino Interdependiente</h2>
+             <p class="mt-4 text-md text-var(--text-secondary) max-w-3xl mx-auto">
+                La construcción de una sociedad más próspera y equitativa en Venezuela depende de la fortaleza e integración de estos tres pilares. La <strong>Administración Pública</strong> enfrenta retos inmensos, la <strong>Ética</strong> es la clave para recuperar la confianza y la eficiencia, y la <strong>Justicia Social</strong> debe ser siempre el horizonte que guíe cada acción del Estado.
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            const diagramNodes = document.querySelectorAll('.diagram-node');
+            const diagramTexts = document.querySelectorAll('.diagram-text');
+
+            function switchNav(targetId) {
+                navButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.target === targetId);
+                });
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', section.id === targetId);
+                });
+            }
+
+            function switchTab(targetTabId, parentSection) {
+                 parentSection.querySelectorAll('.tab-button').forEach(button => {
+                    button.classList.toggle('active', button.dataset.tab === targetTabId);
+                });
+                 parentSection.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.toggle('active', content.id === targetTabId);
+                });
+            }
+            
+            function switchDiagram(targetNodeId) {
+                const targetTextId = targetNodeId.replace('node', 'text');
+                diagramNodes.forEach(node => {
+                    node.classList.toggle('active', node.id === targetNodeId);
+                });
+                 diagramTexts.forEach(text => {
+                    text.classList.add('hidden');
+                    text.classList.remove('active');
+                });
+                const activeText = document.getElementById(targetTextId);
+                if (activeText) {
+                    activeText.classList.remove('hidden');
+                    activeText.classList.add('active');
+                }
+            }
+
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    switchNav(button.dataset.target);
+                });
+            });
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const parentSection = button.closest('.content-section, .max-w-4xl');
+                    switchTab(button.dataset.tab, parentSection);
+                });
+            });
+            
+            diagramNodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    switchDiagram(node.id);
+                });
+            });
+
+            switchNav('pilar-admin');
+            switchTab('admin-definicion', document.getElementById('pilar-admin'));
+            switchTab('justicia-definicion', document.getElementById('pilar-justicia'));
+            switchDiagram('node-etica');
+        });
+    </script>
+</body>
+</html>
